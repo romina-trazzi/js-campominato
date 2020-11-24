@@ -42,7 +42,7 @@ function getRandomInt(min, max) {
 // In questo modo (funzione inArray) verifichiamo che non esistano numeri che si ripetono all'interno dell'array
 var nRandom = [];
 
-while (nRandom.length !== 16) {
+while (nRandom.length <= 16) {
     var numbery = getRandomInt(1, 101); // Salva un singolo numero ad ogni ciclo
     if (! inArray(nRandom, numbery)) { // Se il numero NON è inArray - cioè se inArray =  false (vedi funzione)
         nRandom.push(numbery); // Aggiungiamo nuovi numeri casuali come elementi dell'array   
@@ -52,12 +52,13 @@ while (nRandom.length !== 16) {
 // I due parametri sono indicati in modo generico, diventano specifici quando si invoca la funzione
 function inArray (array, numero) {  
     var i = 0;
-    while(i < array.length) { // Fino a che l'indice è minore della lunghezza dell'array
+    while (i < array.length) { // Fino a che l'indice è minore della lunghezza dell'array
         if (numero === array[i]) { // Se il singolo numero è presente fra gli elementi dell'array
         return true;  // Restituisci inArray = vero
         }
     i++;
     }
+    return false;
 }
 
 // console.log(nRandom);
@@ -66,14 +67,14 @@ function inArray (array, numero) {
 // Confrontiamo ciascun numero con gli elementi dell'array tramite un valore flag
 var userChoiceArray = [];
 var vittorie = 0;
-var possibility = 3;
+var possibility = 84;
 
-for (var x = 0; x < possibility; x++) {
+while (userChoiceArray.length < possibility) {
     var userChoice = Number(prompt("Inserisci un numero compreso tra 0 e 100. Non puoi inserire più volte lo stesso numero o zero."));
-    userChoiceArray.push(userChoice); // Salviamo i numeri scelti dall'utente come elementi di un array
     
     if (inArray (nRandom, userChoice)) { // Se il numero dell'utente è presente nell'array dei numeri del pc
         alert("Game Over");
+        break;
     } else {
         alert("Continuiamo a giocare!");
         vittorie = vittorie + 1;
@@ -81,11 +82,12 @@ for (var x = 0; x < possibility; x++) {
 
     // console.log(vittorie);
 
-    if (inArray (userChoiceArray, userChoice) || (userChoice = 0) || (userChoice > 100)) { // Se il numero dell'utente è già stato scelto da lui e quindi è negli elementi di userChoiceArray
-        alert ("Hai già usato questo numero oppure è zero o maggiore di 100. Inseriscine un altro!");
-        userChoice = Number(prompt("Inserisci un numero compreso tra 0 e 100. Non puoi inserire più volte lo stesso numero o zero."));
-    }
-
+    // Se il numero dell'utente è già stato scelto da lui e quindi è negli elementi di userChoiceArray
+    if (inArray (userChoiceArray, userChoice) || (userChoice <= 0) || (userChoice > 100)) {
+        alert ("Hai già usato questo numero oppure è zero o maggiore di 100. Inseriscine un altro!");     
+        x--;
+    } else userChoiceArray.push(userChoice); // Salviamo i numeri scelti dall'utente come elementi di un array
+    
 }
 
 // Metodo 1 per confrontare gli elementi dell'array con userChoice
@@ -104,12 +106,11 @@ var boolean = nRandom.includes(userChoice);
    
    for (var x = 0; x < possibility; x++) {
    
-   numberRandom == nRandom[i];
-   
-   if (numberRandom === userChoice) {
+   if (nRandom[i] === userChoice) {
         numeroPresente = true;
     }
     
+}
     if (numeroPresente) {   // Essendo un valore booleano può già essere true \ false
     alert("Hai perso!");   
     } else {
@@ -121,10 +122,10 @@ var boolean = nRandom.includes(userChoice);
 
 // Mostriamo all'utente la lista dei numeri generati dal computer, quelli scelti da lui e il numero di punti totalizzato
 var listNumber = document.getElementById("lista_numeri");
-listNumber.innerHTML = nRandom + ", "; 
+listNumber.innerHTML = nRandom; 
 
 var userListNumber = document.getElementById("lista_utente");
-userListNumber.innerHTML = userChoiceArray + ", "; 
+userListNumber.innerHTML = userChoiceArray; 
 
 var punti = document.getElementById("punti_utente");
 punti.style.display = "block"; 
@@ -133,7 +134,7 @@ var vittoria = document.getElementById("numeri_vittorie");
 vittoria.style.color = "red"; 
 vittoria.innerHTML = vittorie;
 
-if (vittorie = 84) {
+if (vittorie == 84) {
     alert("Hai totalizzato il massimo punteggio. Hai vinto!");
 }
 

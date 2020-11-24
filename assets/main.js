@@ -27,6 +27,9 @@ con difficoltà 1 => tra 1 e 80
 con difficoltà 2 => tra 1 e 50  
 
 */
+// Nascondiamo punti_utente
+var punti = document.getElementById("punti_utente");
+punti.style.display = "none"; 
 
 // Generiamo numeri casuali tra 1 e 100 tramite una funzione
 function getRandomInt(min, max) {
@@ -46,25 +49,52 @@ console.log(nRandom);
 
 // Chiediamo all'utente di inserire 84 numeri compresi tra 1 e 100 
 // Confrontiamo ciascun numero con gli elementi dell'array tramite un valore flag
+var numeroPresente = false;
+
+var userChoiceArray = [];
 
 for (var x = 0; x < 5; x++) {
     var userChoice = Number(prompt("Inserisci un numero compreso tra 0 e 100. Non puoi inserire più volte lo stesso numero"));
+    userChoiceArray.push(userChoice); // Salviamo i numeri scelti dall'utente come elementi di un array
     var numberRandom = nRandom[i]; // Salviamo gli elementi dell'array uno per volta in una variabile
 
+    // Metodo 1 per confrontare gli elementi dell'array con userChoice
     /* Creiamo una variabile per verificare se la mail inserita fa parte di quelle dell'array.
-    La risposta può essere true o false */
+    La risposta può essere true o false 
     var boolean = nRandom.includes(userChoice);  
         if (boolean == true) {
             alert("Hai perso!");
         } else {
             alert("Continuiamo a giocare!");
-        }
+        } */
+
+    // Metodo 2 per confrontare gli elementi dell'array con userChoice
+         if (numberRandom == userChoice) {
+             numeroPresente = true;
+         }
+         
+         if (numeroPresente) {   // Essendo un valore booleano può già essere true \ false
+            alert("Hai perso!");   
+         } else {
+            var vittorie = vittorie + 1; 
+            alert("Continuiamo a giocare!")
+         }
     }
 
 
-// Mostriamo all'utente la lista dei numeri generati dal computer
+// Mostriamo all'utente la lista dei numeri generati dal computer, quelli scelti da lui e il numero di punti totalizzato
 var listNumber = document.getElementById("lista_numeri");
-listNumber.innerHTML = nRandom + ", ";  
+listNumber.innerHTML = nRandom + ", "; 
+
+var userListNumber = document.getElementById("lista_utente");
+userListNumber.innerHTML = userChoiceArray + ", "; 
+
+var punti = document.getElementById("punti_utente");
+punti.style.display = "block"; 
+
+var vittorie = document.getElementById("numeri_vittorie");
+vittorie.style.color = "red"; 
+vittorie.innerHTML = vittorie;
 
 
     

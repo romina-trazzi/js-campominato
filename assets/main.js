@@ -7,7 +7,7 @@
 
 Descrizione
 Il computer deve generare 16 numeri casuali tra 1 e 100.
-* I numeri non possono essere duplicati
+I numeri non possono essere duplicati
 In seguito deve chiedere all’utente (100 - 16) volte di inserire un numero alla volta, sempre compreso tra 1 e 100.
 * L’utente non può inserire più volte lo stesso numero.
 
@@ -38,49 +38,86 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min; //Il max è escluso e il min è incluso
 }
 
-// Ripetiamo il procedimento 16 volte tramite un ciclo for per generare una listNumber da inserire in un array vuoto
+// Ripetiamo il procedimento fino a che nell'array non compaiono 16 numeri da inserire in un array vuoto
+// In questo modo (funzione inArray) verifichiamo che non esistano numeri che si ripetono all'interno dell'array
 var nRandom = [];
 
-for (var i = 0; i < 16; i++) { 
-    nRandom.push(getRandomInt(1, 101)); // Salviamo i numeri casuali come elementi dell'array   
+while (nRandom.length !== 16) {
+    var numbery = getRandomInt(1, 101); // Salva un singolo numero ad ogni ciclo
+    if (! inArray(nRandom, numbery)) { // Se il numero NON è inArray - cioè se inArray =  false (vedi funzione)
+        nRandom.push(numbery); // Aggiungiamo nuovi numeri casuali come elementi dell'array   
+    }
 }
 
-console.log(nRandom);
+// I due parametri sono indicati in modo generico, diventano specifici quando si invoca la funzione
+function inArray (array, numero) {  
+    var i = 0;
+    while(i < array.length) { // Fino a che l'indice è minore della lunghezza dell'array
+        if (numero === array[i]) { // Se il singolo numero è presente fra gli elementi dell'array
+        return true;  // Restituisci inArray = vero
+        }
+    i++;
+    }
+}
+
+// console.log(nRandom);
 
 // Chiediamo all'utente di inserire 84 numeri compresi tra 1 e 100 
 // Confrontiamo ciascun numero con gli elementi dell'array tramite un valore flag
-var numeroPresente = false;
-
 var userChoiceArray = [];
+var vittorie = 0;
+var possibility = 3;
 
-for (var x = 0; x < 5; x++) {
-    var userChoice = Number(prompt("Inserisci un numero compreso tra 0 e 100. Non puoi inserire più volte lo stesso numero"));
+for (var x = 0; x < possibility; x++) {
+    var userChoice = Number(prompt("Inserisci un numero compreso tra 0 e 100. Non puoi inserire più volte lo stesso numero o zero."));
     userChoiceArray.push(userChoice); // Salviamo i numeri scelti dall'utente come elementi di un array
-    var numberRandom = nRandom[i]; // Salviamo gli elementi dell'array uno per volta in una variabile
-
-    // Metodo 1 per confrontare gli elementi dell'array con userChoice
-    /* Creiamo una variabile per verificare se la mail inserita fa parte di quelle dell'array.
-    La risposta può essere true o false 
-    var boolean = nRandom.includes(userChoice);  
-        if (boolean == true) {
-            alert("Hai perso!");
-        } else {
-            alert("Continuiamo a giocare!");
-        } */
-
-    // Metodo 2 per confrontare gli elementi dell'array con userChoice
-         if (numberRandom == userChoice) {
-             numeroPresente = true;
-         }
-         
-         if (numeroPresente) {   // Essendo un valore booleano può già essere true \ false
-            alert("Hai perso!");   
-         } else {
-            var vittorie = vittorie + 1; 
-            alert("Continuiamo a giocare!")
-         }
+    
+    if (inArray (nRandom, userChoice)) { // Se il numero dell'utente è presente nell'array dei numeri del pc
+        alert("Game Over");
+    } else {
+        alert("Continuiamo a giocare!");
+        vittorie = vittorie + 1;
     }
 
+    // console.log(vittorie);
+
+    if (inArray (userChoiceArray, userChoice) || (userChoice = 0) || (userChoice > 100)) { // Se il numero dell'utente è già stato scelto da lui e quindi è negli elementi di userChoiceArray
+        alert ("Hai già usato questo numero oppure è zero o maggiore di 100. Inseriscine un altro!");
+        userChoice = Number(prompt("Inserisci un numero compreso tra 0 e 100. Non puoi inserire più volte lo stesso numero o zero."));
+    }
+
+}
+
+// Metodo 1 per confrontare gli elementi dell'array con userChoice
+/* Creiamo una variabile per verificare se la mail inserita fa parte di quelle dell'array.
+La risposta può essere true o false 
+var boolean = nRandom.includes(userChoice);  
+    if (boolean == true) {
+        alert("Hai perso!");
+    } else {
+        alert("Continuiamo a giocare!");
+    } */
+
+// Metodo 2 per confrontare gli elementi dell'array con userChoice
+   /* 
+   var numeroPresente = false;
+   
+   for (var x = 0; x < possibility; x++) {
+   
+   numberRandom == nRandom[i];
+   
+   if (numberRandom === userChoice) {
+        numeroPresente = true;
+    }
+    
+    if (numeroPresente) {   // Essendo un valore booleano può già essere true \ false
+    alert("Hai perso!");   
+    } else {
+    vittorie = vittorie + 1; 
+    alert("Continuiamo a giocare!")
+    } 
+}*/
+    
 
 // Mostriamo all'utente la lista dei numeri generati dal computer, quelli scelti da lui e il numero di punti totalizzato
 var listNumber = document.getElementById("lista_numeri");
@@ -92,9 +129,13 @@ userListNumber.innerHTML = userChoiceArray + ", ";
 var punti = document.getElementById("punti_utente");
 punti.style.display = "block"; 
 
-var vittorie = document.getElementById("numeri_vittorie");
-vittorie.style.color = "red"; 
-vittorie.innerHTML = vittorie;
+var vittoria = document.getElementById("numeri_vittorie");
+vittoria.style.color = "red"; 
+vittoria.innerHTML = vittorie;
+
+if (vittorie = 84) {
+    alert("Hai totalizzato il massimo punteggio. Hai vinto!");
+}
 
 
     

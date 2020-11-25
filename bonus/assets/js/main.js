@@ -20,27 +20,29 @@ while (isNaN(livello) || livello < 0 || livello > 2) {
 
 // Con l'istruzione switch impostiamo i valori delle variabili da acquisire nei differenti casi
 switch (livello) {
-    case 1:
+    case "1":
         var numbery = getRandomInt(1, 81);
         var possibility = 64;
-        var min = 1
-        var max = 81
+        var min = 1;
+        var max = 81;
         break;
 
-    case 2: 
+    case "2": 
         var numbery = getRandomInt(1, 51);
         var possibility = 34;
-        var min = 1
-        var max = 51
+        var min = 1;
+        var max = 51;
         break;
 
     default: 
         var numbery = getRandomInt(1, 101);
         var possibility = 84;
-        var min = 1
-        var max = 101
+        var min = 1;
+        var max = 101;
         break;
 }
+
+console.log(max);
 
 // Generiamo numeri casuali tramite una funzione
 function getRandomInt(min, max) {
@@ -78,11 +80,12 @@ console.log(nRandom);
 // Confrontiamo ciascun numero dell'utente con gli elementi dell'array tramite un valore flag
 var userChoiceArray = [];
 var vittorie = 0;
+var testo = Number(max - 1);
 
-console.log(possibility);
+//console.log(possibility);
 
 while (userChoiceArray.length < possibility) {
-    var userChoice = Number(prompt("Inserisci un numero compreso tra 0 e " + max + ". Non puoi inserire più volte lo stesso numero o zero."));
+    var userChoice = Number(prompt("Inserisci un numero compreso tra 0 e " + testo + ". Non puoi inserire più volte lo stesso numero o zero."));
 
     if (inArray(nRandom, userChoice)) { // Se il numero dell'utente è presente nell'array dei numeri del pc
         alert("Game Over");
@@ -92,7 +95,7 @@ while (userChoiceArray.length < possibility) {
         vittorie = vittorie + 1;
     }
 
-    console.log(vittorie);
+    // console.log(vittorie);
 
     // Se il numero dell'utente è già stato scelto da lui e quindi è negli elementi di userChoiceArray
     if (inArray(userChoiceArray, userChoice) || (userChoice <= 0) || (userChoice > max) || (isNaN(userChoice))) {
@@ -100,6 +103,8 @@ while (userChoiceArray.length < possibility) {
     } else userChoiceArray.push(userChoice); // Salviamo i numeri scelti dall'utente come elementi di un array
 
 }
+
+console.log(userChoiceArray);
 
 // Metodo 1 per confrontare gli elementi dell'array con userChoice
 /* Creiamo una variabile per verificare se la mail inserita fa parte di quelle dell'array.
@@ -145,7 +150,10 @@ var vittoria = document.getElementById("numeri_vittorie");
 vittoria.style.color = "red";
 vittoria.innerHTML = vittorie;
 
-if (vittorie == max) {
+var puntiMassimi = document.getElementById("numeri_punti");
+puntiMassimi.innerHTML = testo;
+
+if (vittorie == testo) {
     alert("Hai totalizzato il massimo punteggio. Hai vinto!");
 }
 

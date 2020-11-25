@@ -1,4 +1,3 @@
-
 /*====================================================
 =            CODICE JS CAMPOMINATO BONUS            =
 ======================================================*/
@@ -13,13 +12,13 @@ con difficoltà 2 => tra 1 e 50 */
 var punti = document.getElementById("punti_utente");
 punti.style.display = "none";
 
-// Chiediamo all'utente il livello di difficoltà che vuole impostare
+// Chiediamo all'utente il livello di difficoltà che vuole impostare + validazione
 var livello = prompt("Quale livello di difficoltà vuoi scegliere? Digita un numero da 0 a 2.");
 while (isNaN(livello) || livello < 0 || livello > 2) {
     prompt("Non hai inserito correttamente il livello di difficoltà. Riprova! Digita un numero da 0 a 2.");
 }
 
-// Con l'istruzione switch impostiamo i blocchi di codice da eseguire nei differenti casi
+// Con l'istruzione switch impostiamo i valori delle variabili da acquisire nei differenti casi
 switch (livello) {
     case 1:
         var numbery = getRandomInt(1, 81);
@@ -39,7 +38,7 @@ switch (livello) {
         var numbery = getRandomInt(1, 101);
         var possibility = 84;
         var min = 1
-        var max = 81
+        var max = 101
         break;
 }
 
@@ -75,10 +74,12 @@ function inArray(array, numero) {
 
 console.log(nRandom);
 
-// Chiediamo all'utente di inserire 84 numeri compresi tra 1 e 100 
-// Confrontiamo ciascun numero con gli elementi dell'array tramite un valore flag
+// Chiediamo all'utente di inserire i suoi numeri
+// Confrontiamo ciascun numero dell'utente con gli elementi dell'array tramite un valore flag
 var userChoiceArray = [];
 var vittorie = 0;
+
+console.log(possibility);
 
 while (userChoiceArray.length < possibility) {
     var userChoice = Number(prompt("Inserisci un numero compreso tra 0 e " + max + ". Non puoi inserire più volte lo stesso numero o zero."));
@@ -94,9 +95,8 @@ while (userChoiceArray.length < possibility) {
     console.log(vittorie);
 
     // Se il numero dell'utente è già stato scelto da lui e quindi è negli elementi di userChoiceArray
-    if (inArray(userChoiceArray, userChoice) || (userChoice <= 0) || (userChoice > 100) || (isNan(userChoice))) {
-        alert("Hai già usato questo numero oppure è zero o maggiore di 100. Inseriscine un altro!");
-        x--;
+    if (inArray(userChoiceArray, userChoice) || (userChoice <= 0) || (userChoice > max) || (isNaN(userChoice))) {
+        alert("Hai già usato questo numero oppure è zero o maggiore di " + max + ". Inseriscine un altro!");
     } else userChoiceArray.push(userChoice); // Salviamo i numeri scelti dall'utente come elementi di un array
 
 }
@@ -145,7 +145,7 @@ var vittoria = document.getElementById("numeri_vittorie");
 vittoria.style.color = "red";
 vittoria.innerHTML = vittorie;
 
-if (vittorie == 84) {
+if (vittorie == max) {
     alert("Hai totalizzato il massimo punteggio. Hai vinto!");
 }
 

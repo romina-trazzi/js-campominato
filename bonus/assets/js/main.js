@@ -13,6 +13,7 @@ var punti = document.getElementById("punti_utente");
 punti.style.display = "none";
 
 // Chiediamo all'utente il livello di difficoltà che vuole impostare + validazione
+var livello = 0;
 var livello = prompt("Quale livello di difficoltà vuoi scegliere? Digita un numero da 0 a 2.");
 while (isNaN(livello) || livello < 0 || livello > 2) {
     prompt("Non hai inserito correttamente il livello di difficoltà. Riprova! Digita un numero da 0 a 2.");
@@ -99,7 +100,7 @@ while (userChoiceArray.length < possibility) {
 
     // Se il numero dell'utente è già stato scelto da lui e quindi è negli elementi di userChoiceArray
     if (inArray(userChoiceArray, userChoice) || (userChoice <= 0) || (userChoice > max) || (isNaN(userChoice))) {
-        alert("Hai già usato questo numero oppure è zero o maggiore di " + max + ". Inseriscine un altro!");
+        alert("Hai già usato questo numero oppure è zero o maggiore di " + testo + ". Inseriscine un altro!");
     } else userChoiceArray.push(userChoice); // Salviamo i numeri scelti dall'utente come elementi di un array
 
 }
